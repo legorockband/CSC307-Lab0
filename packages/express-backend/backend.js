@@ -43,9 +43,6 @@ const findUserByName = (name) => {
   );
 };
 
-const findUserById = (id) =>
-  users["users_list"].find((user) => user["id"] === id);
-
 app.get("/users", (req, res) => {
   const name = req.query.name;
   if (name != undefined) {
@@ -56,6 +53,9 @@ app.get("/users", (req, res) => {
     res.send(users);
   }
 });
+
+const findUserById = (id) =>
+  users["users_list"].find((user) => user["id"] === id);
 
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
@@ -78,6 +78,19 @@ app.post("/users", (req, res) => {
   res.send();
 });
 
+
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  const userIndex = users["users_list"].findIndex(user => user.id === id);
+
+  if (userIndex === -1){
+    return res.status(404).send("ID not found");
+  }
+
+  users["users_list"].splice(userIndex, 1);
+  res.send();
+
+});
 
 app.listen(port, () => {
   console.log(
