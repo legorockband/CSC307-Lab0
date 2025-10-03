@@ -9,7 +9,7 @@ const port = 8000;
 const users = {
   users_list: [
     {
-      id: "xyz6789",
+      id: "xyz789",
       name: "Charlie",
       job: "Janitor"
     },
@@ -35,6 +35,11 @@ const users = {
     }
   ]
 };
+
+// Generate an ID from 0 to 999,999
+function genID() {
+  return String(Math.floor(Math.random() * 1000000 ));
+}
 
 app.use(cors());
 app.use(express.json());
@@ -98,6 +103,11 @@ const addUser = (user) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+  
+  if(!req.body.hasOwnProperty('id')){
+    req.body.id = genID();
+  }
+
   addUser(userToAdd);
   res.status(201).send(`Content Created`);
 });
