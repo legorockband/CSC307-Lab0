@@ -104,12 +104,12 @@ const addUser = (user) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   
-  if(!req.body.hasOwnProperty('id')){
-    req.body.id = genID();
+  if(!userToAdd.hasOwnProperty('id')){
+    userToAdd.id = genID();
   }
 
   addUser(userToAdd);
-  res.status(201).send(`Content Created`);
+  res.status(201).json(userToAdd);
 });
 
 
@@ -122,8 +122,7 @@ app.delete("/users/:id", (req, res) => {
   }
 
   users["users_list"].splice(userIndex, 1);
-  res.send();
-
+  res.status(204).send();
 });
 
 app.listen(port, () => {
@@ -131,4 +130,3 @@ app.listen(port, () => {
     `Example app listening at http://localhost:${port}`
   );
 });
-
