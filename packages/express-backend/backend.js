@@ -58,6 +58,19 @@ app.post("/users", (req, res) => {
 
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"];
+  
+  const deleteUser = userServices.deleteUserById(id);
+  
+  deleteUser
+    .then((result) => {
+      res.status(204).send(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).send("ID not found");
+    });
+
+/*  
   const userIndex = users["users_list"].findIndex(user => user.id === id);
 
   if (userIndex === -1){
@@ -66,6 +79,7 @@ app.delete("/users/:id", (req, res) => {
 
   users["users_list"].splice(userIndex, 1);
   res.status(204).send();
+*/
 });
 
 app.listen(port, () => {
