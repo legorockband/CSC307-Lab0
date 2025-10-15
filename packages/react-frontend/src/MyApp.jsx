@@ -12,7 +12,7 @@ function MyApp() {
     })
       .then((res) => {
         if (res.status === 204) {  
-          setCharacters((prev) => prev.filter((c) => c.id !== id));
+          setCharacters((prev) => prev.filter((c) => c._id !== id));
         }
         else if(res.status === 404) {
           console.error(`Delete Failed: User Not Found (${res.status})`);
